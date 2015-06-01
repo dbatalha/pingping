@@ -12,7 +12,6 @@ def main():
 
     for csv in os.listdir(csv_dir):
         if csv.endswith(".csv"):
-            print csv
 
             current_file_path = os.path.join(csv_dir, csv)
             words_file = open(current_file_path, "r")
@@ -34,22 +33,24 @@ def main():
                 html = html_data.split()
                 lenhtml = len(html)
 
-                i = 0
-                while i < lenhtml:
-                    net = html[i].find(".net")
-                    if int(net) >= 0:
-                        dots = html[i].find("...")
-                        if int(dots) != -1:
-                            print html[i]
-                    '''
-                    com = html[i].find(".com")
-                    if int(com) >= 0:
-                        print html[i]
-                    org = html[i].find(".org")
-                    if int(org) >= 0:
-                        print html[i]
-                    '''
-                    i += 1
+                domains = [".net", ".com", ".org", ".edu"]
+                for domain in domains:
+                    i = 0
+                    while i < lenhtml:
+                        net = html[i].find(str(domain))
+                        if int(net) >= 0:
+                            dots = html[i].find("...")
+                            more = html[i].find("More")
+                            if int(dots) != -1 and int(more) != -1:
+                                complete_url = html[i][int(dots)+3:int(more)]
+                                garbage = complete_url.find(")")
+                                random_dot = complete_url.find(".")
+                                if int(garbage) == 0:
+                                    print html[i][int(garbage)+2:int(dots)]
+                                if int(random_dot) == 0:
+                                    print "Random dot here"
+                                print complete_url
+                        i += 1
 
                 driver.get("https://duckduckgo.com/")
 
