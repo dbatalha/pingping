@@ -12,11 +12,16 @@ class DuckParser(object):
 
     def __init__(self):
         self.local_dir = os.getcwd()
-        self.csv_dir = os.path.join(self.local_dir, "words_data")
+        self.csv_dir = os.path.join(self.local_dir, "DuckGo", "words_data")
 
         self.driver = webdriver.Firefox()
 
     def get_duck_websites(self):
+        """
+        This method open the webpage "https://duckduckgo.com" and get all websites.
+        Stores the output websites on a python list.
+        :return:
+        """
         self.driver.get("https://duckduckgo.com/")
 
         for csv in os.listdir(self.csv_dir):
@@ -40,12 +45,12 @@ class DuckParser(object):
                     html_data = parser.get_data()
 
                     html = html_data.split()
-                    lenhtml = len(html)
+                    len_html = len(html)
 
                     domains = [".net", ".com", ".org", ".edu"]
                     for domain in domains:
                         i = 0
-                        while i < lenhtml:
+                        while i < len_html:
                             net = html[i].find(str(domain))
                             if int(net) >= 0:
                                 dots = html[i].find("...")
