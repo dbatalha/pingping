@@ -1,9 +1,11 @@
 __author__ = 'dbatalha'
 
+import os
+
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-from duck_html_parser import *
-import os
+
+from DuckGo.DuckHTMLParser import *
 
 
 class DuckParser(object):

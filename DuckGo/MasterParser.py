@@ -1,6 +1,6 @@
 __author__ = 'dbatalha'
 
-from getwebdata import *
+from GetWebData import *
 
 
 class MasterParser(DuckParser):
