@@ -11,10 +11,15 @@ from DuckGo.DuckHTMLParser import *
 class DuckParser(object):
 
     def __init__(self):
+        # Variables used on get duck websites.
         self.local_dir = os.getcwd()
         self.csv_dir = os.path.join(self.local_dir, "DuckGo", "words_data")
 
+        # Load web driver variable.
         self.driver = webdriver.Firefox()
+
+        # List wih all websites
+        self.websites_list = []
 
     def get_duck_websites(self):
         """
@@ -60,12 +65,12 @@ class DuckParser(object):
                                     garbage = complete_url.find(")")
                                     random_dot = complete_url.find(".")
                                     if int(garbage) == 0:
-                                        print html[i][int(garbage)+2:int(dots)]
+                                        self.websites_list.append(html[i][int(garbage)+2:int(dots)])
                                     if int(random_dot) == 0:
                                         print "Random dot here"
                                     print complete_url
                             i += 1
 
                     self.driver.get("https://duckduckgo.com/")
+                self.driver.close()
 
-            self.driver.close()
