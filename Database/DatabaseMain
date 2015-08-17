@@ -1,0 +1,11 @@
+__author__ = 'dbatalha'
+from DatabaseMaster import DatabaseOperations
+
+
+class DatabaseMain(DatabaseOperations):
+
+    def __init__(self):
+        DatabaseOperations.__init__(self)
+
+    def insert_website(self):
+        print self.test

@@ -15,11 +15,11 @@ class DuckParser(object):
         self.local_dir = os.getcwd()
         self.csv_dir = os.path.join(self.local_dir, "DuckGo", "words_data")
 
-        # Load web driver variable.
-        self.driver = webdriver.Firefox()
-
         # List wih all websites
         self.websites_list = []
+
+        # List whit all trimmed websites (address only)
+        self.websites_list_trimmed = []
 
     @staticmethod
     def get_website_address(website):
@@ -38,7 +38,6 @@ class DuckParser(object):
         Stores the output websites on a python list.
         :return:
         """
-        self.driver.get("https://duckduckgo.com/")
 
         for csv in os.listdir(self.csv_dir):
             if csv.endswith(".csv"):
@@ -48,13 +47,19 @@ class DuckParser(object):
 
                 for word in words_file:
                     prep = word.strip()
-                    self.driver.find_element_by_id('search_form_input_homepage').send_keys(prep)
-                    self.driver.find_element_by_id('search_button_homepage').click()
+
+                    # Load web driver variable.
+                    driver = webdriver.Firefox()
+
+                    driver.get("https://duckduckgo.com/")
+
+                    driver.find_element_by_id('search_form_input_homepage').send_keys(prep)
+                    driver.find_element_by_id('search_button_homepage').click()
 
                     for times in range(0, 50):
-                        self.driver.find_element_by_id('links_wrapper').send_keys(Keys.SPACE)
+                        driver.find_element_by_id('links_wrapper').send_keys(Keys.SPACE)
 
-                    html_source = self.driver.page_source
+                    html_source = driver.page_source
 
                     parser = GoDuckParser()
                     parser.feed(html_source)
@@ -81,10 +86,13 @@ class DuckParser(object):
                                         print "Random dot here"
 
                                     trimmed = self.get_website_address(complete_url)
+
+                                    self.websites_list.append(complete_url)
+                                    self.websites_list_trimmed.append(trimmed)
+
                                     print "Complete: %s Trimmed: %s" % (complete_url, trimmed)
 
                             i += 1
 
-                    self.driver.get("https://duckduckgo.com/")
-                self.driver.close()
-
+                    driver.get("https://duckduckgo.com/")
+                    driver.close()
