@@ -21,6 +21,17 @@ class DuckParser(object):
         # List wih all websites
         self.websites_list = []
 
+    @staticmethod
+    def get_website_address(website):
+        site = str(website).find("/")
+
+        if site == -1:
+            website_processed = website
+        else:
+            website_processed = str(website)[0:site]
+
+        return website_processed
+
     def get_duck_websites(self):
         """
         This method open the webpage "https://duckduckgo.com" and get all websites.
@@ -68,7 +79,10 @@ class DuckParser(object):
                                         self.websites_list.append(html[i][int(garbage)+2:int(dots)])
                                     if int(random_dot) == 0:
                                         print "Random dot here"
-                                    print complete_url
+
+                                    trimmed = self.get_website_address(complete_url)
+                                    print "Complete: %s Trimmed: %s" % (complete_url, trimmed)
+
                             i += 1
 
                     self.driver.get("https://duckduckgo.com/")

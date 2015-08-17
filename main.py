@@ -2,6 +2,7 @@ __author__ = 'dbatalha'
 
 from DuckGo import DuckGo
 
+
 def main():
 
     data = DuckGo()
