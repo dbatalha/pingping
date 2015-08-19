@@ -85,7 +85,10 @@ class DuckParser(object):
                                     if int(random_dot) == 0:
                                         print "Random dot here"
 
-                                    trimmed = self.get_website_address(complete_url)
+                                    try:
+                                        trimmed = self.get_website_address(complete_url)
+                                    except UnicodeEncodeError:
+                                        trimmed = None
 
                                     self.websites_list.append(complete_url)
                                     self.websites_list_trimmed.append(trimmed)
