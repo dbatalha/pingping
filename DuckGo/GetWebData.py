@@ -6,6 +6,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
 from DuckGo.DuckHTMLParser import *
+import PingPing
 
 
 class DuckParser(object):
@@ -20,6 +21,8 @@ class DuckParser(object):
 
         # List whit all trimmed websites (address only)
         self.websites_list_trimmed = []
+
+        self.ping = PingPing.PingMaster()
 
     @staticmethod
     def get_website_address(website):
@@ -89,6 +92,8 @@ class DuckParser(object):
                                         trimmed = self.get_website_address(complete_url)
                                     except UnicodeEncodeError:
                                         trimmed = None
+
+                                    self.ping.ping_web()
 
                                     self.websites_list.append(complete_url)
                                     self.websites_list_trimmed.append(trimmed)
