@@ -93,7 +93,7 @@ class DuckParser(object):
                                     except UnicodeEncodeError:
                                         trimmed = None
 
-                                    self.ping.ping_web()
+                                    self.ping.ping_web(trimmed)
 
                                     self.websites_list.append(complete_url)
                                     self.websites_list_trimmed.append(trimmed)
